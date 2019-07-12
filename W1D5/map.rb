@@ -28,15 +28,19 @@ class Map
     end
 
     def show
+        deep_dup(map)
     end
 
     private
     attr_accessor :map
-end
 
-map = Map.new
-map.set(1,2)
-map.set(3,4)
-map.set(4,5)
-map.set(1,3)
-p map
+    def deep_dup(array)
+        array.map do |ele|
+            if ele.is_a?(Array)
+                deep_dup(ele)
+            else
+                ele
+            end
+        end
+    end
+end
