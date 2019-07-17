@@ -21,8 +21,11 @@ class Simon
   def take_turn
     self.show_sequence
     self.require_sequence
-    @sequence_length += 1
-    self.round_success_message if !@game_over 
+
+    unless @game_over
+      self.round_success_message 
+      @sequence_length += 1
+    end
   end
 
   def show_sequence
@@ -36,18 +39,13 @@ class Simon
 
   def require_sequence
     puts "Repeat the sequence in order!"
-    puts "Input one color on each line:"
+    puts "Input first letter of color in the sequence on each line:"
 
-    self.sequence_length.times do 
-      i = 0
-
+    self.seq.each_with_index do |color|
       user_color = gets.chomp
-
-      if user_color != self.seq[i]
+      if user_color[0] != color[0]
         @game_over = true
       end
-
-      i += 1
     end
   end
 
